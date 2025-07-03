@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Card,
     CardBody,
@@ -7,6 +7,7 @@ import {
     Button,
     IconButton,
     Tooltip,
+    Chip,
 } from "@material-tailwind/react";
 import {
     TrashIcon,
@@ -16,23 +17,63 @@ import {
 } from "@heroicons/react/24/solid";
 
 export default function Links() {
-    const links = [
+    const [links, setLinks] = useState([
         {
             tarif: "TestDrive",
-            url: "https://t.me/joinchat/testdrive123",
-            expires: "2025-07-08",
+            url: generateUniqueLink("testdrive"),
+            expires: getExpireDate(7), // 7 дней
+            status: "active",
         },
         {
             tarif: "Silver",
-            url: "https://t.me/joinchat/silver456",
+            url: generateUniqueLink("silver"),
             expires: "Doimiy",
+            status: "active",
         },
         {
             tarif: "Gold",
-            url: "https://t.me/joinchat/gold789",
+            url: generateUniqueLink("gold"),
             expires: "Doimiy",
+            status: "used", // Пример как будто ссылка уже была использована
         },
-    ];
+    ]);
+
+    function generateUniqueLink(prefix) {
+        return `https://t.me/joinchat/${prefix}-${Math.random().toString(36).substr(2, 8)}`;
+    }
+
+    function getExpireDate(days) {
+        const date = new Date();
+        date.setDate(date.getDate() + days);
+        return date.toISOString().split("T")[0];
+    }
+
+    function regenerateLink(index) {
+        const newLinks = [...links];
+        newLinks[index].url = generateUniqueLink(newLinks[index].tarif.toLowerCase());
+        newLinks[index].expires = newLinks[index].tarif === "TestDrive" ? getExpireDate(7) : "Doimiy";
+        newLinks[index].status = "active";
+        setLinks(newLinks);
+    }
+
+    function deleteLink(index) {
+        const newLinks = [...links];
+        newLinks.splice(index, 1);
+        setLinks(newLinks);
+    }
+
+    function getStatusChip(status) {
+        switch (status) {
+            case "active":
+                return <Chip color="green" size="sm" value="Faol" />;
+            case "used":
+                return <Chip color="amber" size="sm" value="Foydalanilgan" />;
+            case "expired":
+                return <Chip color="red" size="sm" value="Muddati tugagan" />;
+            default:
+                return null;
+        }
+    }
 
     return (
         <div className="min-h-screen p-4">
@@ -46,15 +87,40 @@ export default function Links() {
 
             {/* Кнопки */}
             <div className="flex flex-wrap gap-4 mb-6">
-                <Button color="blue" className="flex items-center gap-2">
+                <Button
+                    color="blue"
+                    onClick={() =>
+                        setLinks([
+                            ...links,
+                            {
+                                tarif: "Silver",
+                                url: generateUniqueLink("silver"),
+                                expires: "Doimiy",
+                                status: "active",
+                            },
+                        ])
+                    }
+                    className="flex items-center gap-2"
+                >
                     <PlusIcon className="h-5 w-5" />
                     Silver/Gold uchun havola qo‘shish
                 </Button>
-                <Button variant="outlined" color="green">
+                <Button
+                    variant="outlined"
+                    color="green"
+                    onClick={() =>
+                        setLinks([
+                            ...links,
+                            {
+                                tarif: "TestDrive",
+                                url: generateUniqueLink("testdrive"),
+                                expires: getExpireDate(7),
+                                status: "active",
+                            },
+                        ])
+                    }
+                >
                     TestDrive uchun 7 kunlik havola generatsiyasi
-                </Button>
-                <Button variant="outlined" color="blue-gray">
-                    Har bir foydalanuvchiga shaxsiy havola ulashish
                 </Button>
             </div>
 
@@ -67,6 +133,7 @@ export default function Links() {
                                 <th className="p-3">Tarif</th>
                                 <th className="p-3">Kanal havolasi</th>
                                 <th className="p-3">Amal muddati</th>
+                                <th className="p-3">Status</th>
                                 <th className="p-3 text-center">Amallar</th>
                             </tr>
                         </thead>
@@ -75,19 +142,25 @@ export default function Links() {
                                 <tr key={index} className="hover:bg-blue-gray-50 text-sm">
                                     <td className="p-3 font-medium">{link.tarif}</td>
                                     <td className="p-3 text-blue-700 underline break-all">
-                                        <a href={link.url} target="_blank" rel="noopener noreferrer">
+                                        <a
+                                            href={link.status === "active" ? link.url : "#"}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={link.status !== "active" ? "opacity-50 pointer-events-none" : ""}
+                                        >
                                             {link.url}
                                         </a>
                                     </td>
                                     <td className="p-3">{link.expires}</td>
+                                    <td className="p-3">{getStatusChip(link.status)}</td>
                                     <td className="p-3 flex justify-center gap-2">
                                         <Tooltip content="Havolani yangilash">
-                                            <IconButton variant="text" color="blue">
+                                            <IconButton variant="text" color="blue" onClick={() => regenerateLink(index)}>
                                                 <PencilIcon className="h-5 w-5" />
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip content="Bekor qilish">
-                                            <IconButton variant="text" color="red">
+                                            <IconButton variant="text" color="red" onClick={() => deleteLink(index)}>
                                                 <TrashIcon className="h-5 w-5" />
                                             </IconButton>
                                         </Tooltip>
@@ -96,7 +169,7 @@ export default function Links() {
                             ))}
                             {links.length === 0 && (
                                 <tr>
-                                    <td colSpan={4} className="text-center py-6 text-gray-500">
+                                    <td colSpan={5} className="text-center py-6 text-gray-500">
                                         Hozircha havolalar mavjud emas.
                                     </td>
                                 </tr>
