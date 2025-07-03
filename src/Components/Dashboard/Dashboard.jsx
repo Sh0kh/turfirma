@@ -18,6 +18,7 @@ import {
   TrophyIcon,
   CurrencyDollarIcon,
 } from "@heroicons/react/24/solid";
+import { NavLink } from "react-router-dom";
 
 export default function Dashboard() {
   const today = new Date();
@@ -97,6 +98,7 @@ export default function Dashboard() {
   return (
     <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {stats.map((stat, index) => (
+        <NavLink to={`/users/${stat.title}`}>
         <Card
           key={index}
           className={`bg-gradient-to-br ${stat.color} text-white shadow-md hover:shadow-xl transition-transform hover:scale-[1.02] rounded-xl`}
@@ -113,6 +115,7 @@ export default function Dashboard() {
             </div>
           </CardBody>
         </Card>
+        </NavLink>
       ))}
 
       <Card className="col-span-1 sm:col-span-2 lg:col-span-3 bg-white shadow-md hover:shadow-lg transition-all rounded-xl">
