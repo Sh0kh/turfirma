@@ -13,6 +13,7 @@ import BotSettings from "./Components/BotSettings/BotSettings";
 import UsersCome from "./Components/Dashboard/components/UsersCome/UsersCome";
 import ReLink from "./Components/ReLink/ReLink";
 import Referal from "./Components/Referal/Referal";
+import ReferalChart from "./Components/ReferealChart/ReferalChart";
 
 
 function App() {
@@ -34,9 +35,10 @@ function App() {
             <Route path="/payment" element={<Payment />} />
             <Route path="/links" element={<Links />} />
             <Route path="/bot/settings" element={<BotSettings />} />
-            <Route path="/users/:ID" element={<UsersCome/>} />
-            <Route path="/linksnews" element={<ReLink/>} />
-            <Route path="/referal" element={<Referal/>} />
+            <Route path="/users/:ID" element={<UsersCome />} />
+            <Route path="/linksnews" element={<ReLink />} />
+            <Route path="/referal" element={<Referal />} />
+            <Route path="/referal/chart" element={<ReferalChart />} />
 
 
 
