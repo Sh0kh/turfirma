@@ -38,7 +38,7 @@ function App() {
             <Route path="/users/:ID" element={<UsersCome />} />
             <Route path="/linksnews" element={<ReLink />} />
             <Route path="/referal" element={<Referal />} />
-            <Route path="/referal/chart" element={<ReferalChart />} />
+            <Route path="/referal-chart" element={<ReferalChart />} />
 
 
 
