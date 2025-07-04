@@ -7,6 +7,8 @@ import {
     Button,
     IconButton,
     Tooltip,
+    Select,
+    Option,
 } from "@material-tailwind/react";
 import {
     MagnifyingGlassIcon,
@@ -18,7 +20,8 @@ import {
 
 export default function UsersCome() {
     const [search, setSearch] = useState("");
-    
+    const [period, setPeriod] = useState("day");
+
     // URL dan title olish
     const getPageTitle = () => {
         const path = window.location.pathname;
@@ -103,14 +106,28 @@ export default function UsersCome() {
                 </Button>
             </div>
 
-            <Card className="mb-4 p-[20px]">
-                <div>
-                    <Input
-                        label="Qidiruv (ism, telefon, ID)"
-                        icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+            {/* Filters */}
+            <Card className="p-[20px] mb-[10px]">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <Typography className="text-sm text-gray-700 mb-1">Davrni tanlang</Typography>
+                        <Select value={period} onChange={(val) => setPeriod(val)}>
+                            <Option value="day">Kunlik</Option>
+                            <Option value="week">Haftalik</Option>
+                            <Option value="month">Oylik</Option>
+                            <Option value="3month">Oxirgi 3 oy</Option>
+                            <Option value="5month">Oxirgi 5 oy</Option>
+                            <Option value="year">1 yil</Option>
+                        </Select>
+                    </div>
+                    <div>
+                        <Typography className="text-sm text-gray-700 mb-1">Boshlanish sanasi</Typography>
+                        <Input type="date" />
+                    </div>
+                    <div>
+                        <Typography className="text-sm text-gray-700 mb-1">Tugash sanasi</Typography>
+                        <Input type="date" />
+                    </div>
                 </div>
             </Card>
 
@@ -145,13 +162,12 @@ export default function UsersCome() {
                                     <td className="p-3">{user.phone}</td>
                                     <td className="p-3">
                                         <span
-                                            className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                                user.status === "Aktiv"
-                                                    ? "bg-green-100 text-green-800"
-                                                    : user.status === "Muddat tugagan"
+                                            className={`px-2 py-1 rounded-full text-xs font-medium ${user.status === "Aktiv"
+                                                ? "bg-green-100 text-green-800"
+                                                : user.status === "Muddat tugagan"
                                                     ? "bg-red-100 text-red-800"
                                                     : "bg-yellow-100 text-yellow-800"
-                                            }`}
+                                                }`}
                                         >
                                             {user.status}
                                         </span>
@@ -160,13 +176,12 @@ export default function UsersCome() {
                                     <td className="p-3">{user.endDate}</td>
                                     <td className="p-3">
                                         <span
-                                            className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                                user.plan === "Gold"
-                                                    ? "bg-yellow-100 text-yellow-800"
-                                                    : user.plan === "Silver"
+                                            className={`px-2 py-1 rounded-full text-xs font-medium ${user.plan === "Gold"
+                                                ? "bg-yellow-100 text-yellow-800"
+                                                : user.plan === "Silver"
                                                     ? "bg-gray-100 text-gray-800"
                                                     : "bg-blue-100 text-blue-800"
-                                            }`}
+                                                }`}
                                         >
                                             {user.plan}
                                         </span>

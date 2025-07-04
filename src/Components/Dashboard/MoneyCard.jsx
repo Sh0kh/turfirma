@@ -8,6 +8,8 @@ import {
     Input,
 } from "@material-tailwind/react";
 import { CurrencyDollarIcon } from "@heroicons/react/24/solid";
+import { Option as MTOption } from "@material-tailwind/react";
+
 import {
     LineChart,
     Line,

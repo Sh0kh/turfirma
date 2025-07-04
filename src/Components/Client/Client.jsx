@@ -7,6 +7,8 @@ import {
     Button,
     IconButton,
     Tooltip,
+    Select,
+    Option,
 } from "@material-tailwind/react";
 import {
     MagnifyingGlassIcon,
@@ -17,6 +19,7 @@ import {
 
 export default function Client() {
     const [search, setSearch] = useState("");
+    const [period, setPeriod] = useState("day");
 
     const users = [
         {
@@ -64,14 +67,27 @@ export default function Client() {
                 </Button>
             </div>
 
-            <Card className="mb-4  p-[20px]">
-                <div >
-                    <Input
-                        label="Qidiruv (ism, telefon, ID)"
-                        icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+            <Card className="p-[20px] mb-[10px]">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <Typography className="text-sm text-gray-700 mb-1">Davrni tanlang</Typography>
+                        <Select value={period} onChange={(val) => setPeriod(val)}>
+                            <Option value="day">Kunlik</Option>
+                            <Option value="week">Haftalik</Option>
+                            <Option value="month">Oylik</Option>
+                            <Option value="3month">Oxirgi 3 oy</Option>
+                            <Option value="5month">Oxirgi 5 oy</Option>
+                            <Option value="year">1 yil</Option>
+                        </Select>
+                    </div>
+                    <div>
+                        <Typography className="text-sm text-gray-700 mb-1">Boshlanish sanasi</Typography>
+                        <Input type="date" />
+                    </div>
+                    <div>
+                        <Typography className="text-sm text-gray-700 mb-1">Tugash sanasi</Typography>
+                        <Input type="date" />
+                    </div>
                 </div>
             </Card>
 
