@@ -14,6 +14,7 @@ import UsersCome from "./Components/Dashboard/components/UsersCome/UsersCome";
 import ReLink from "./Components/ReLink/ReLink";
 import Referal from "./Components/Referal/Referal";
 import ReferalChart from "./Components/ReferealChart/ReferalChart";
+import CategoryDetail from "./Components/CategoryDetail/CategoryDetail";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="/client" element={<Client />} />
             <Route path="/category" element={<Category />} />
+            <Route path="/category/:catrgoryID" element={<CategoryDetail />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/links" element={<Links />} />
             <Route path="/bot/settings" element={<BotSettings />} />

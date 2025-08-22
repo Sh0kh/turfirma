@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Swal from 'sweetalert2';
+import { $api } from '../../utils';
+import { Alert } from '../../utils/Alert';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -15,28 +17,19 @@ export default function Login() {
     setShowPassword((prev) => !prev);
   };
 
-  const handleLogin = () => {
-    if (username === 'Admin' && password === 'Admin123') {
-      Swal.fire({
-        title: 'Xush kelibsiz!',
-        icon: 'success',
-        timer: 2000,
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-      });
-      navigate('/');
-      localStorage.setItem('isAuthenticated', 'true');
-    } else {
-      Swal.fire({
-        title: 'Xato!',
-        text: 'Login yoki parol noto‘g‘ri',
-        icon: 'error',
-        timer: 3000,
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-      });
+  const handleLogin = async () => {
+    try {
+      const response = await $api.post(`/auth/login`, { username: username, password: password })
+      if (response?.data?.code === 200) {
+        Alert("Muvaffaqiyatli qo'shildi", "success");
+        localStorage.setItem('accessToken', response?.data?.accessToken)
+        navigate('/')
+      } else {
+        Alert(`login yoki parol xato`, "error")
+      }
+    } catch (error) {
+      console.log(error)
+      Alert(`Xatolik: ${error}`, "error");
     }
   };
 
