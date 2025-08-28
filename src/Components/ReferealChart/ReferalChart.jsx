@@ -7,6 +7,7 @@ import { TrendingUp, Users, } from 'lucide-react';
 import { FaTelegramPlane, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
 import { BsGlobe } from "react-icons/bs";
 import Loading from '../UI/Loading/Loading';
+import { $api } from '../../utils';
 
 export default function ReferralChart() {
     const [data, setData] = useState(false);
@@ -43,31 +44,12 @@ export default function ReferralChart() {
     // Имитация API вызова с вашими данными
     const getReferalStatistik = async () => {
         try {
-            // Имитируем ваши данные
-            const mockApiResponse = {
-                object: {
-                    clicksCountByPlatform: {
-                        "INSTAGRAM": 9,
-                        "TIKTOK": 5
-                    },
-                    clicks: 14,
-                    percentages: {
-                        "INSTAGRAM": 64,
-                        "TIKTOK": 35
-                    },
-                    best_platform: "INSTAGRAM"
-                },
-                message: "Yaxshi",
-                success: true
-            };
+            const response = await $api.get(`referral/getStatistics`)
 
-            // Имитируем задержку API
-            setTimeout(() => {
-                setData(mockApiResponse.object);
-                setLoading(false);
-            }, 1000);
+            setData(response?.data?.object);
         } catch (error) {
             console.log(error);
+        }finally{
             setLoading(false);
         }
     };

@@ -67,11 +67,12 @@ export default function Links() {
             <Card>
                 <CardBody className="overflow-x-auto p-4">
                     <table className="w-full text-left border-collapse">
+                        
                         <thead>
                             <tr className="bg-blue-gray-50 text-gray-700 text-sm">
                                 <th className="p-3">Tarif</th>
                                 <th className="p-3">Kanal havolasi</th>
-                                <th className="p-3">Yaratilgan muddati</th>
+                                {/* <th className="p-3">Yaratilgan muddati</th> */}
                                 <th className="p-3 text-center">Amallar</th>
                             </tr>
                         </thead>
@@ -89,9 +90,9 @@ export default function Links() {
                                             {link.link}
                                         </a>
                                     </td>
-                                    <td className="p-3">
+                                    {/* <td className="p-3">
                                         {new Date(link.createdAt).toLocaleString()}
-                                    </td>
+                                    </td> */}
                                     <td className="p-3 flex justify-center gap-2">
                                         <LinksEdit refresh={getAllLinks} data={link}/>
                                         <LinksDelete refresh={getAllLinks} id={link?.id} />

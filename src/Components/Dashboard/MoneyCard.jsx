@@ -88,9 +88,9 @@ export default function MoneyCard() {
 
             const data = response.data?.object || [];
 
-            // Преобразуем данные для графика
+            // Преобразуем данные для графика - используем поле date вместо period
             const transformedData = data.map(item => ({
-                name: formatDateForChart(item.period),
+                name: formatDateForChart(item.date), // Изменено с item.period на item.date
                 amount: item.count
             }));
 
@@ -119,7 +119,7 @@ export default function MoneyCard() {
 
             // Преобразуем данные для графика
             const transformedData = data.map(item => ({
-                name: formatPeriodName(item.period, periodFilters.period),
+                name: formatPeriodName(item.period || item.date, periodFilters.period), // Учитываем оба поля
                 amount: item.count
             }));
 
@@ -148,38 +148,34 @@ export default function MoneyCard() {
     };
 
     // Форматирование даты для графика (для запроса по датам)
-    const formatDateForChart = (period) => {
-        const date = new Date(period);
-        return date.toLocaleDateString('uz-UZ', {
-            month: 'short',
-            day: '2-digit'
-        });
+    const formatDateForChart = (dateString) => {
+        // Проверяем, что dateString существует и является строкой
+        if (!dateString || typeof dateString !== 'string') {
+            return 'Invalid Date';
+        }
+
+        try {
+            // Возвращаем дату в формате YYYY-MM-DD как есть
+            return dateString;
+        } catch (error) {
+            console.error('Error formatting date:', error);
+            return 'Invalid Date';
+        }
     };
 
     // Форматирование названий периодов для отображения
-    const formatPeriodName = (period, filterType) => {
-        const date = new Date(period);
+    const formatPeriodName = (dateString, filterType) => {
+        // Проверяем, что dateString существует
+        if (!dateString || typeof dateString !== 'string') {
+            return 'Invalid Date';
+        }
 
-        switch (filterType) {
-            case "DAY":
-                return date.toLocaleTimeString('uz-UZ', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            case "WEEK":
-                return date.toLocaleDateString('uz-UZ', {
-                    weekday: 'short'
-                });
-            case "MONTH":
-                return date.toLocaleDateString('uz-UZ', {
-                    day: '2-digit'
-                });
-            case "YEAR":
-                return date.toLocaleDateString('uz-UZ', {
-                    month: 'short'
-                });
-            default:
-                return date.toLocaleDateString('uz-UZ');
+        try {
+            // Возвращаем дату в формате YYYY-MM-DD как есть для всех типов
+            return dateString;
+        } catch (error) {
+            console.error('Error formatting period name:', error);
+            return 'Invalid Date';
         }
     };
 
@@ -333,23 +329,6 @@ export default function MoneyCard() {
                             />
                         </LineChart>
                     </ResponsiveContainer>
-                </div>
-
-                {/* Stats */}
-                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                    {paymentStats.map((item, idx) => (
-                        <div
-                            key={idx}
-                            className="bg-gray-100 hover:bg-gray-200 p-4 rounded-lg transition-all text-center"
-                        >
-                            <Typography className="text-gray-600 font-medium mb-1">
-                                {item.title}
-                            </Typography>
-                            <Typography className="text-xl font-bold text-gray-900">
-                                {item.value}
-                            </Typography>
-                        </div>
-                    ))}
                 </div>
             </CardBody>
         </Card>
