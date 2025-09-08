@@ -15,29 +15,71 @@ import { useParams } from "react-router-dom";
 import { Alert } from "../../../utils/Alert";
 
 export default function CategoryAddPrice({ refresh }) {
-    const { catrgoryID } = useParams()
+    const { catrgoryID } = useParams();
     const [open, setOpen] = useState(false);
     const [form, setForm] = useState({
-        tourTypeId: 0,
-        price: 0,
-        month: 0,
+        price: "",
+        year: "",
+        month: "",
+        week: "",
+        day: "",
     });
 
     const handleOpen = () => setOpen(!open);
 
+    // форматируем число: 100000 -> 100 000
+    const formatNumber = (value) => {
+        if (!value) return "";
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    };
+
+    const parseNumber = (value) => {
+        return Number(value.replace(/\s/g, "")) || 0;
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setForm({ ...form, [name]: value });
+
+        if (name === "price") {
+            // удаляем пробелы и форматируем заново
+            const raw = value.replace(/\s/g, "");
+            if (!/^\d*$/.test(raw)) return; // только числа
+            setForm({ ...form, price: formatNumber(raw) });
+        } else {
+            setForm({ ...form, [name]: value === "" ? "" : Number(value) });
+        }
     };
 
     const handleSubmit = async () => {
+        const payload = {
+            tourTypeId: catrgoryID,
+            price: parseNumber(form.price), // чистое число без пробелов
+            year: Number(form.year) || 0,
+            month: Number(form.month) || 0,
+            week: Number(form.week) || 0,
+            day: Number(form.day) || 0,
+        };
+
+        // Проверка
+        if (payload.price <= 0 || (payload.year === 0 && payload.month === 0 && payload.week === 0 && payload.day === 0)) {
+            Alert("Qiymatlar noto‘g‘ri! Narx > 0 bo‘lishi va muddatlardan biri tanlanishi kerak.", "error");
+            return;
+        }
+
         try {
-            const response = await $api.post(`/tour/type/price/create`, { tourTypeId: catrgoryID, price: form?.price, month: form?.month })
+            await $api.post(`/tour/type/price/create`, payload);
             Alert("Muvaffaqiyatli qo'shildi", "success");
-            refresh()
-            handleOpen()
+            refresh();
+            handleOpen();
+            setForm({
+                price: "",
+                year: "",
+                month: "",
+                week: "",
+                day: "",
+            });
         } catch (error) {
-            console.log(error)
+            console.log(error);
             Alert(`Xatolik: ${error}`, "error");
         }
     };
@@ -60,8 +102,15 @@ export default function CategoryAddPrice({ refresh }) {
                     <Input
                         label="Price"
                         name="price"
-                        type="number"
+                        type="text"
                         value={form.price}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        label="Year"
+                        name="year"
+                        type="number"
+                        value={form.year}
                         onChange={handleChange}
                     />
                     <Input
@@ -69,6 +118,20 @@ export default function CategoryAddPrice({ refresh }) {
                         name="month"
                         type="number"
                         value={form.month}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        label="Week"
+                        name="week"
+                        type="number"
+                        value={form.week}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        label="Day"
+                        name="day"
+                        type="number"
+                        value={form.day}
                         onChange={handleChange}
                     />
                 </DialogBody>

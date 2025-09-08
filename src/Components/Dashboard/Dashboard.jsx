@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import MoneyCard from "./MoneyCard";
 import { $api } from "../../utils";
 import Loading from "../UI/Loading/Loading";
+import UserList from "./UserList";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -84,6 +85,7 @@ export default function Dashboard() {
       ))}
 
       <MoneyCard />
+      <UserList />
     </div>
   );
 }

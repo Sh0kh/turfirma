@@ -20,6 +20,7 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { $api } from "../../utils";
+import MessageModal from "./MessageModal";
 
 export default function MoneyCard() {
     // Получение начала и конца текущего месяца
@@ -204,13 +205,17 @@ export default function MoneyCard() {
         <Card className="col-span-1 sm:col-span-2 lg:col-span-3 bg-white shadow-md hover:shadow-lg transition-all rounded-xl">
             <CardBody>
                 {/* Header */}
-                <div className="flex items-center space-x-4 mb-6">
-                    <CurrencyDollarIcon className="h-10 w-10 text-yellow-600" />
-                    <Typography variant="h6" className="text-gray-800 text-xl font-semibold">
-                        To'lovlar statistikasi
-                    </Typography>
-                </div>
+                <div className="flex items-center justify-between ">
+                    <div className="flex items-center space-x-4 mb-6">
+                        <CurrencyDollarIcon className="h-10 w-10 text-yellow-600" />
+                        <Typography variant="h6" className="text-gray-800 text-xl font-semibold">
+                            To'lovlar statistikasi
+                        </Typography>
+                    </div>
 
+                    <MessageModal />
+
+                </div>
                 {/* Фильтр по датам */}
                 <div className="bg-blue-50 p-4 rounded-lg mb-6">
                     <Typography variant="h6" className="text-gray-800 mb-4 font-medium">

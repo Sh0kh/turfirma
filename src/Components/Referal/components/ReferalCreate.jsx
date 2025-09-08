@@ -12,12 +12,12 @@ import {
 import { $api } from "../../../utils";
 import { Alert } from "../../../utils/Alert";
 
-export default function ReferalCreate() {
+export default function ReferalCreate({ refresh }) {
     const [open, setOpen] = useState(false);
     const [form, setForm] = useState({
         name: "",
         link: "",
-        clickCount: 0,
+        clickCount: '',
         platform: "TELEGRAM",
     });
 
@@ -38,6 +38,7 @@ export default function ReferalCreate() {
                 platform: "TELEGRAM",
             })
             handleOpen()
+            refresh()
         } catch (error) {
             console.log(error)
             Alert(`Xatolik: ${error}`, "error");
