@@ -20,6 +20,7 @@ import {
 import { useParams } from "react-router-dom";
 import { $api } from "../../../../utils";
 import Loading from "../../../UI/Loading/Loading";
+import UserComeDelete from "./UserComeDelete";
 
 export default function UsersCome() {
     const { ID } = useParams()
@@ -76,6 +77,7 @@ export default function UsersCome() {
                                 <th className="p-3">Passport</th>
                                 <th className="p-3">Paket tugashi</th>
                                 <th className="p-3">Necha marta</th>
+                                <th className="p-3">Amalar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,6 +98,11 @@ export default function UsersCome() {
                                     <td className="p-3">{user.subscription?.expiryDate}</td>
 
                                     <td className="p-3 font-semibold ">{user.subscription?.count}</td>
+                                    <td className="p-3 font-semibold flex items-center justify-center">
+                                        <div className="flex items-center justify-center">
+                                            <UserComeDelete refresh={getUser} id={user?.id}/>
+                                        </div>
+                                    </td>
                                 </tr>
                             ))}
                             {data.length === 0 && (
