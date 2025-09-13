@@ -43,10 +43,11 @@ export default function ReferralChart() {
             const cfg = platformConfig[key] || platformConfig.OTHER;
             const percentage = data.percentages[key] || 0;
             return {
-                name: cfg.name,
+                name: key, // Используем оригинальное название из data
                 value,
                 percentage,
-                color: COLORS[index % COLORS.length], // фиксированный цвет по индексу
+                color: COLORS[index % COLORS.length],
+                icon: cfg.icon, // Берем иконку из конфига
             };
         });
     }, [data]);
@@ -66,8 +67,6 @@ export default function ReferralChart() {
                         Trafik manbalarini va konversiyalarni real vaqtda kuzatib boring
                     </p>
                 </div>
-
-                {/* Проверка на отсутствие данных */}
                 {(!data || pieData.length === 0) ? (
                     <div className="flex flex-col items-center justify-center bg-white rounded-2xl shadow-xl p-12 text-center">
                         <AlertCircle className="w-16 h-16 text-gray-400 mb-4" />
@@ -76,7 +75,6 @@ export default function ReferralChart() {
                     </div>
                 ) : (
                     <>
-                        {/* Основные показатели */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                             <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-6 text-white">
                                 <div className="flex items-center justify-between">
@@ -98,8 +96,6 @@ export default function ReferralChart() {
                                 </div>
                             </div>
                         </div>
-
-                        {/* График */}
                         <div className="bg-white rounded-2xl shadow-xl p-6 mb-8">
                             <h3 className="text-xl font-bold text-gray-900 mb-6">🎯 Manbalar taqsimoti</h3>
                             <ResponsiveContainer width="100%" height={400}>
@@ -130,7 +126,6 @@ export default function ReferralChart() {
                         </div>
                     </>
                 )}
-
                 {/* Footer */}
                 <div className="mt-8 text-center text-gray-500">
                     <p>📊 Ma'lumotlar real vaqtda yangilanadi</p>
