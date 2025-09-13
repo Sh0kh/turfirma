@@ -21,6 +21,7 @@ import {
 } from "recharts";
 import { $api } from "../../utils";
 import MessageModal from "./MessageModal";
+import { NavLink } from "react-router-dom";
 
 export default function MoneyCard() {
     // Получение начала и конца текущего месяца
@@ -213,7 +214,11 @@ export default function MoneyCard() {
                         </Typography>
                     </div>
 
-                    <MessageModal />
+                    <NavLink to={`/message`}>
+                        <Button color="blue" className="rounded-xl">
+                            Xabar yuborish
+                        </Button>
+                    </NavLink>
 
                 </div>
                 {/* Фильтр по датам */}

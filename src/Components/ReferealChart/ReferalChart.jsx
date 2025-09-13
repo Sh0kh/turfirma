@@ -13,11 +13,11 @@ export default function ReferralChart() {
     const [loading, setLoading] = useState(true);
 
     const platformConfig = {
-        TELEGRAM: { name: "Telegram", icon: <FaTelegramPlane className="text-sky-500" />, color: "#0088cc" },
-        INSTAGRAM: { name: "Instagram", icon: <FaInstagram className="text-pink-500" />, color: "#E1306C" },
-        YOUTUBE: { name: "YouTube", icon: <FaYoutube className="text-red-600" />, color: "#FF0000" },
-        TIKTOK: { name: "TikTok", icon: <FaTiktok className="text-black" />, color: "#000000" },
-        OTHER: { name: "Boshqa", icon: <BsGlobe className="text-gray-500" />, color: "#6b7280" },
+        TELEGRAM: { name: "Telegram", icon: <FaTelegramPlane className="text-sky-500" /> },
+        INSTAGRAM: { name: "Instagram", icon: <FaInstagram className="text-pink-500" /> },
+        YOUTUBE: { name: "YouTube", icon: <FaYoutube className="text-red-600" /> },
+        TIKTOK: { name: "TikTok", icon: <FaTiktok className="text-black" /> },
+        OTHER: { name: "Boshqa", icon: <BsGlobe className="text-gray-500" /> },
     };
 
     const getReferalStatistik = async () => {
@@ -31,12 +31,23 @@ export default function ReferralChart() {
         }
     };
 
+    // Набор фиксированных цветов (будет повторяться по кругу, если платформ больше)
+    const COLORS = [
+        "#0088FE", "#00C49F", "#FFBB28", "#FF8042",
+        "#845EC2", "#D65DB1", "#FF6F91", "#2C73D2"
+    ];
+
     const pieData = useMemo(() => {
         if (!data?.clicksCountByPlatform || !data?.percentages) return [];
-        return Object.entries(data.clicksCountByPlatform).map(([key, value]) => {
+        return Object.entries(data.clicksCountByPlatform).map(([key, value], index) => {
             const cfg = platformConfig[key] || platformConfig.OTHER;
             const percentage = data.percentages[key] || 0;
-            return { name: cfg.name, value: value, percentage: percentage, color: cfg.color };
+            return {
+                name: cfg.name,
+                value,
+                percentage,
+                color: COLORS[index % COLORS.length], // фиксированный цвет по индексу
+            };
         });
     }, [data]);
 
@@ -65,7 +76,7 @@ export default function ReferralChart() {
                     </div>
                 ) : (
                     <>
-                        {/* Asosiy Ko'rsatkichlar */}
+                        {/* Основные показатели */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                             <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-6 text-white">
                                 <div className="flex items-center justify-between">
@@ -88,7 +99,7 @@ export default function ReferralChart() {
                             </div>
                         </div>
 
-                        {/* Grafik */}
+                        {/* График */}
                         <div className="bg-white rounded-2xl shadow-xl p-6 mb-8">
                             <h3 className="text-xl font-bold text-gray-900 mb-6">🎯 Manbalar taqsimoti</h3>
                             <ResponsiveContainer width="100%" height={400}>

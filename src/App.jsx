@@ -15,6 +15,9 @@ import ReLink from "./Components/ReLink/ReLink";
 import Referal from "./Components/Referal/Referal";
 import ReferalChart from "./Components/ReferealChart/ReferalChart";
 import CategoryDetail from "./Components/CategoryDetail/CategoryDetail";
+import LastWeekOutUser from "./Components/Dashboard/components/UsersCome/LastWeekOutUser";
+import LastWeekInvitesUser from "./Components/Dashboard/components/UsersCome/LastWeekInvitesUser";
+import Message from "./Components/Message/Message";
 
 
 function App() {
@@ -38,6 +41,9 @@ function App() {
             <Route path="/links" element={<Links />} />
             <Route path="/bot/settings" element={<BotSettings />} />
             <Route path="/users/:ID" element={<UsersCome />} />
+            <Route path="/users/week-out" element={<LastWeekOutUser />} />
+            <Route path="/users/week-Invites" element={<LastWeekInvitesUser />} />
+            <Route path="/message" element={<Message />} />
             <Route path="/linksnews" element={<ReLink />} />
             <Route path="/referal" element={<Referal />} />
             <Route path="/referal-chart" element={<ReferalChart />} />

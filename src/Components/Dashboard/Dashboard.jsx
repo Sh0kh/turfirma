@@ -63,6 +63,34 @@ export default function Dashboard() {
           </div>
         </CardBody>
       </Card>
+      <NavLink to={`/users/week-out`}>
+        <Card className="bg-gradient-to-br from-red-500 to-red-700 text-white shadow-md hover:shadow-xl transition-transform hover:scale-[1.02] rounded-xl">
+          <CardBody className="flex items-center justify-between p-6">
+            <div className="flex items-center justify-between w-full">
+              <Typography variant="h6" className="text-white opacity-90 mb-1">
+                24 soatda chiqib ketganlar
+              </Typography>
+              <Typography variant="h4" className="font-bold text-white">
+                {data?.lastWeekQuitesCount}
+              </Typography>
+            </div>
+          </CardBody>
+        </Card>
+      </NavLink>
+      <NavLink to={`/users/week-Invites`}>
+        <Card className="bg-gradient-to-br from-orange-500 to-orange-700 text-white shadow-md hover:shadow-xl transition-transform hover:scale-[1.02] rounded-xl">
+          <CardBody className="flex items-center justify-between p-6">
+            <div className="flex items-center justify-between w-full">
+              <Typography variant="h6" className="text-white opacity-90 mb-1">
+                24 soatda qo‘shilganlar
+              </Typography>
+              <Typography variant="h4" className="font-bold text-white">
+                {data?.lastWeekInvitesCount}
+              </Typography>
+            </div>
+          </CardBody>
+        </Card>
+      </NavLink>
       {/* остальные карточки */}
       {data?.groupByTourType?.map((stat, index) => (
         <NavLink key={index} to={`/users/${stat.tourType?.id}`}>
