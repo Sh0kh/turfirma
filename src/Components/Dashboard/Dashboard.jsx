@@ -9,6 +9,7 @@ import MoneyCard from "./MoneyCard";
 import { $api } from "../../utils";
 import Loading from "../UI/Loading/Loading";
 import UserList from "./UserList";
+import Buttons from "../Buttons/Buttons";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -30,7 +31,6 @@ export default function Dashboard() {
     getCustomerStatistik();
   }, []);
 
-  // 🎨 массив градиентов
   const gradients = [
     "from-green-500 to-green-700",
     "from-blue-500 to-blue-700",
@@ -48,9 +48,10 @@ export default function Dashboard() {
     )
   }
 
-  return (
-    <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {/* первая карточка */}
+return (
+  <div className="p-6 space-y-6"> 
+    {/* Cards qismi */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <Card className="bg-gradient-to-br from-green-500 to-green-700 text-white shadow-md hover:shadow-xl transition-transform hover:scale-[1.02] rounded-xl">
         <CardBody className="flex items-center justify-between p-6">
           <div className="flex items-center justify-between w-full">
@@ -63,6 +64,7 @@ export default function Dashboard() {
           </div>
         </CardBody>
       </Card>
+
       <NavLink to={`/users/week-out`}>
         <Card className="bg-gradient-to-br from-red-500 to-red-700 text-white shadow-md hover:shadow-xl transition-transform hover:scale-[1.02] rounded-xl">
           <CardBody className="flex items-center justify-between p-6">
@@ -77,6 +79,7 @@ export default function Dashboard() {
           </CardBody>
         </Card>
       </NavLink>
+
       <NavLink to={`/users/week-Invites`}>
         <Card className="bg-gradient-to-br from-orange-500 to-orange-700 text-white shadow-md hover:shadow-xl transition-transform hover:scale-[1.02] rounded-xl">
           <CardBody className="flex items-center justify-between p-6">
@@ -91,7 +94,7 @@ export default function Dashboard() {
           </CardBody>
         </Card>
       </NavLink>
-      {/* остальные карточки */}
+
       {data?.groupByTourType?.map((stat, index) => (
         <NavLink key={index} to={`/users/${stat.tourType?.id}`}>
           <Card
@@ -111,9 +114,16 @@ export default function Dashboard() {
           </Card>
         </NavLink>
       ))}
-
-      <MoneyCard />
-      <UserList />
     </div>
-  );
+
+    {/* Quyidagi componentlar endi kartalardan ajraladi */}
+    <div className="mt-8">
+      <Buttons />
+    </div>
+
+    <MoneyCard />
+    <UserList />
+  </div>
+);
+
 }
