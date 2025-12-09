@@ -118,7 +118,7 @@ return (
 
     {/* Quyidagi componentlar endi kartalardan ajraladi */}
     <div className="mt-8">
-      <Buttons />
+      {/* <Buttons /> */}
     </div>
 
     <MoneyCard />

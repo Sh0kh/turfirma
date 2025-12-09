@@ -4,6 +4,8 @@ import SendPhoto from "./components/SendPhoto";
 import SendVideo from "./components/SendVideo";
 import SendPoll from "./components/SendPoll";
 import SendMessage from "./components/SendMassage";
+import { CurrencyDollarIcon } from "@heroicons/react/24/solid";
+import { Typography } from "@material-tailwind/react";
 
 export default function Buttons() {
   const [openSendPhoto, setOpenSendPhoto] = useState(false);
@@ -39,17 +41,28 @@ export default function Buttons() {
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full mx-auto mt-8">
-      {buttons.map((btn, index) => (
-        <button
-          key={index}
-          onClick={btn.onClick}
-          className={`flex items-center justify-center gap-2 bg-gradient-to-br ${btn.color} text-white font-semibold py-3 px-4 rounded-xl shadow-md hover:shadow-lg hover:scale-[1.03] active:scale-95 transition-transform`}
-        >
-          {btn.icon}
-          {btn.label}
-        </button>
-      ))}
+    <>
+     <div className="flex items-center px-4 gap-[10px]">
+                    <Typography variant="h3" className="text-gray-800 font-bold">
+                        Harakatlar paneli
+                    </Typography>
+                </div>
+                
+                 <div className="grid grid-cols-2 gap-4 w-full mx-auto mt-8 px-4">
+         
+  {buttons.map((btn, index) => (
+    <button
+      key={index}
+      onClick={btn.onClick}
+      className={`w-full flex h-[130px] items-center justify-center gap-3 bg-gradient-to-br ${btn.color} 
+      text-white font-semibold py-5 px-6 text-lg rounded-2xl shadow-lg 
+      hover:shadow-xl hover:scale-[1.04] active:scale-95 transition-transform`}
+    >
+      {btn.icon}
+      {btn.label}
+    </button>
+  ))}
+
 
       {openSendPhoto && (
         <SendPhoto open={openSendPhoto} setOpen={setOpenSendPhoto} />
@@ -63,6 +76,7 @@ export default function Buttons() {
       {openSendMessage && (
         <SendMessage open={openSendMessage} setOpen={setOpenSendMessage} /> 
       )}
-    </div>
+    </div></>
+  
   );
 }

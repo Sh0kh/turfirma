@@ -97,7 +97,7 @@ export default function SendVideo({ open, setOpen }) {
 
   return (
     <Dialog open={open} handler={handleClose}>
-      <DialogHeader>🎥 Send Video</DialogHeader>
+      <DialogHeader>Send Video</DialogHeader>
 
       <form onSubmit={handleSubmit}>
         <DialogBody divider>

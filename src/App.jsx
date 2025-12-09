@@ -18,6 +18,7 @@ import CategoryDetail from "./Components/CategoryDetail/CategoryDetail";
 import LastWeekOutUser from "./Components/Dashboard/components/UsersCome/LastWeekOutUser";
 import LastWeekInvitesUser from "./Components/Dashboard/components/UsersCome/LastWeekInvitesUser";
 import Message from "./Components/Message/Message";
+import Buttons from "./Components/Buttons/Buttons";
 
 
 function App() {
@@ -47,6 +48,8 @@ function App() {
             <Route path="/linksnews" element={<ReLink />} />
             <Route path="/referal" element={<Referal />} />
             <Route path="/referal-chart" element={<ReferalChart />} />
+            <Route path="/buttons" element={<Buttons />} />
+
 
 
 
